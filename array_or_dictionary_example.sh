@@ -1,5 +1,15 @@
 #!/bin/bash
 
+: '
+    In this Script we are using array (dictionary).
+    Also creating a excel csv report file.
+
+  '
+
+# Pre-task
+rm -rf /tmp/system_report.csv
+
+
 ip_host=$(hostname -I)    #Storing Command OutPut into variable
 host_name=$(hostname)     #Storing Command OutPut into variable
 kernel_ver=$(uname -r)    #Storing Command OutPut into variable
