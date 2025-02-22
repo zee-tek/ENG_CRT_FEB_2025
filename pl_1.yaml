@@ -1,0 +1,24 @@
+---
+- name: Creating yum repository
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Create BaseOS Repository
+      ansible.builtin.yum_repository:
+        name: "baseos"
+        description: "Baseos Description"
+        baseurl: http://ec2-54-162-204-86.compute-1.amazonaws.com/BaseOs/
+        gpgcheck: yes
+        gpgkey: http://ec2-54-162-204-86.compute-1.amazonaws.com/RPM-GPG-KEY-redhat-release
+        enabled: yes
+
+
+    - name: Create Appstream Repository
+      ansible.builtin.yum_repository:
+        name: "appstream"
+        description: "App Description"
+        baseurl: http://ec2-54-162-204-86.compute-1.amazonaws.com/AppStream/
+        gpgcheck: yes
+        gpgkey: http://ec2-54-162-204-86.compute-1.amazonaws.com/RPM-GPG-KEY-redhat-release
+        enabled: yes
+
