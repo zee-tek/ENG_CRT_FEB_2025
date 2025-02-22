@@ -1,0 +1,29 @@
+---
+- name: package installation
+  hosts: dev,test
+  gather_facts: false
+  tasks:
+    - name: installing php and mariadb-server
+      dnf:
+      name:
+        - vsftpd
+        - mariadb-server
+      state: present
+
+- name: group package installation
+  hosts: prod
+  gather_facts: false
+  tasks:
+    - name: installing group package 'Development tools'
+      dnf:
+        name: '@RPM Development Tools'
+      state: present
+
+- name: update packages
+  hosts: dev
+  gather_facts: false
+  tasks:
+    - name: updating all
+      dnf:
+        name: '*'
+        state: latest

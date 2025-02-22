@@ -1,0 +1,28 @@
+---
+- name: create a link
+  hosts: prod
+  gather_facts: false
+  tasks:
+    - name: create a directory
+      file:
+        path: /devwork
+      state: directory
+      group: ansi_user
+      mode: '02775'
+      setype: httpd_sys_content_t
+
+    - name: create a file
+      file:
+        path: /devwork/index.html
+        state: touch
+ 
+    - name: copy the contents to index.html
+      copy:
+        content: "Development in progress\n"
+      dest: /devwork/index.html
+
+    - name: link the directory
+      file:
+        src: /devwork
+        dest: /var/www/html/devwork
+
