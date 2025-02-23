@@ -3,14 +3,8 @@
   hosts: controller
   tasks:
 
-
-    - name: Remove hwreport.txt if already exists
-      file:
-        path: /root/hwreport.txt
-        state: absent
-
     - name: Download the file
-      uri:
+      get_url:
         url: "http://ec2-54-162-204-86.compute-1.amazonaws.com/hwreport.txt"
         dest: /root/hwreport.txt
 
