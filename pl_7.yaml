@@ -1,0 +1,11 @@
+---
+- name : Create a cronjob
+  hosts: all
+  tasks:
+    - name: Cronjob for logger
+      cron:
+        name: Create logger
+        user: ansi_user
+        minute: "*/2"
+        job: logger "Learning Ansible"
+        state: present
