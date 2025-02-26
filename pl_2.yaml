@@ -20,7 +20,7 @@
       service:
         name: firewalld
         state: started
-      enabled: yes
+        enabled: yes
  
     - name: Add http service in firewall rule
       firewalld:
