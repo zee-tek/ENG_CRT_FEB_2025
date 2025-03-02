@@ -38,7 +38,7 @@
      
       always:
 
-        - name: Formate Filesystem
+        - name: Format Filesystem
           filesystem:
             fstype: ext4
             dev: /dev/sdb1
