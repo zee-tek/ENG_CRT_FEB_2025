@@ -1,0 +1,52 @@
+---
+- name: Create partition,filesystem and mount
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Create partition
+      block:
+
+        - name: Check Disk availability
+          debug:
+           msg: "sdb disk does not exist"
+          when: "'sdb' not in ansible_facts['devices']"
+
+
+        - name: create partition
+          parted:
+            device: /dev/sdb
+            number: 1
+            state: present
+            part_end: 1500MiB
+          when: "'sdb' in ansible_facts['devices']"
+
+      rescue:
+        - name: Print failure message
+          debug:
+            msg: "Could not create partition of 1500MiB"
+
+
+        - name: Create partition with 800MiB
+          parted:
+            device: /dev/sdb
+            number: 1
+            state: present
+            part_end: 800MiB
+          when: "'sdb' in ansible_facts['devices']"
+
+
+     
+      always:
+
+        - name: Formate Filesystem
+          filesystem:
+            fstype: ext4
+            dev: /dev/sdb1
+
+        - name: mount filesystem on /mnt
+          mount:
+            path: /mnt
+            src: /dev/sdb1
+            fstype: ext4
+            state: mounted
+          when: "inventory_hostname in groups['prod']" 

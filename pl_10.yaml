@@ -1,0 +1,96 @@
+---
+- name: Create first Set of Users
+  hosts: dev,test
+  gather_facts: false
+  vars_files:
+    - user_list.yml
+    - vault.yml
+
+  tasks:
+    - name: Create opsdev group
+      group:
+        name: opsdev
+        state: present
+
+
+    - name: Create users with developer job
+      user:
+        name: "{{item['name']}}"
+        uid:  "{{item['uid']}}"
+        groups: opsdev
+        password_expire_max: "{{item['password_expire_days']}}"
+        password: "{{ pw_developer | password_hash('sha512') }}" 
+      loop:
+        "{{users}}"
+      when: item['job'] == 'developer'
+     
+     
+- name: Create first Set of Users
+  hosts: test
+  gather_facts: false
+  vars_files:
+    - user_list.yml
+    - vault.yml
+
+  tasks:
+    - name: Create opsdev group
+      group:
+        name: opsmgr
+        state: present
+
+
+    - name: Create users with developer job
+      user:
+        name: "{{item['name']}}"
+        uid:  "{{item['uid']}}"
+        groups: opsmgr
+        password_expire_max: "{{item['password_expire_days']}}"
+        password: "{{ pw_manager | password_hash('sha512') }}" 
+      loop:
+        "{{users}}"
+      when: item['job'] == 'manager'
+     
+     
+     
+     
+    
+   
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    
+   
+   
+    
+    
+    
+    
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
