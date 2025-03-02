@@ -7,7 +7,7 @@
       block:
 
         - name: Check Disk availability
-          fail:
+          debug:
            msg: "sdb disk does not exist"
           when: "'sdb' not in ansible_facts['devices']"
 
@@ -22,7 +22,7 @@
 
       rescue:
         - name: Print failure message
-          fail:
+          debug:
             msg: "Could not create partition of 1500MiB"
 
 
