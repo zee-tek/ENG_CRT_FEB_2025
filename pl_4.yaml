@@ -10,6 +10,11 @@
        group: ansi_user
        mode: '02775'
        setype: httpd_sys_content_t
+    
+    - name: Create file
+      file: 
+        path: /devwork/index.html
+        state: touch
 
  
     - name: copy the contents to index.html
