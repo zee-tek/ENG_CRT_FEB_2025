@@ -1,0 +1,42 @@
+---
+# tasks file for zee-php
+
+- name: Enable the PHP 8.2 module
+  command: dnf module enable php:8.2 -y
+  args:
+    creates: /etc/dnf/modules.d/php:8.2.module
+
+- name: Install PHP 8.2 and extensions
+  dnf:
+    name:
+      - php
+      - php-cli
+      - php-fpm
+      - php-mysqlnd
+      - php-xml
+      - php-mbstring
+      - php-json
+      - php-zip
+      - httpd
+    state: present
+
+
+- name: Create PHP webpage
+  template:
+    src: php.j2
+    dest: /var/www/html/index.php
+
+
+- name: Start and enable httpd service
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: create firewall rules
+  firewalld:
+    service: http
+    state: enabled
+    immediate: yes
+    permanent: yes
+

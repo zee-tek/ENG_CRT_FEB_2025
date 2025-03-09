@@ -1,0 +1,32 @@
+---
+# tasks file for zee-balancer
+- name: Install haproxy
+  dnf:
+    name: 
+      - haproxy
+      - firewalld
+    state: present
+
+- name: Configure haproxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+
+- name: assign ownership
+  shell: chown -R haproxy:haproxy /run/haproxy/;chmod 755 /run/haproxy/
+
+- name: Enable and start haproxy
+  service:
+    name: "{{item}}"
+    state: started
+    enabled: yes
+  loop:
+    - haproxy
+    - firewalld
+
+- name: Add Firewall Rule
+  firewalld:
+    service: http
+    state: enabled
+    immediate: yes
+    permanent: yes

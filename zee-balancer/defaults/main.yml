@@ -1,0 +1,8 @@
+---
+# defaults file for zee-balancer
+backend_servers:
+  - name: serverb.example.com
+    address: 192.168.1.90
+  - name: serverc.example.com
+    address: 192.168.1.91
+
