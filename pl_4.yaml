@@ -21,7 +21,6 @@
       copy:
         content: "Development in progress\n"
         dest: /devwork/index.html
-        setype: httpd_sys_content_t
 
 
     - name: link the directory
